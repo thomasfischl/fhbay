@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-// variant 1
-//@Embeddable
-// variant 2
 @Entity
 public class Address implements Serializable {
   private static final long serialVersionUID = -1L;

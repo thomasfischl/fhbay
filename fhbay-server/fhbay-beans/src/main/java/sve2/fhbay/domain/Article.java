@@ -2,7 +2,10 @@ package sve2.fhbay.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,8 +13,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -48,6 +53,10 @@ public class Article implements Serializable {
 
   @Enumerated(EnumType.STRING)
   private ArticleState articleState = ArticleState.OFFERED;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @JoinColumn
+  private Set<Category> categories = new HashSet<>();
 
   public Article() {
   }
@@ -138,6 +147,14 @@ public class Article implements Serializable {
 
   public void setArticleState(ArticleState articleState) {
     this.articleState = articleState;
+  }
+
+  public Set<Category> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(Set<Category> categories) {
+    this.categories = categories;
   }
 
   @Override

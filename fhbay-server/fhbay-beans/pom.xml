@@ -7,28 +7,26 @@
 	<!-- mvn install jboss-as:deploy build fhbay-beans.jar and fhbay-beans-client.jar 
 		+ install to local repository + deploy to jboss -->
 
-    <parent>
+	<parent>
 		<groupId>sve2.ejb</groupId>
 		<artifactId>fhbay</artifactId>
 		<version>1.0.0</version>
-    </parent>
+	</parent>
 
-	<groupId>sve2.ejb</groupId>
 	<artifactId>fhbay-beans</artifactId>
-	<version>1.0.0</version>
 	<packaging>ejb</packaging>
 
 	<properties>
 		<org.jboss.arquillian.version>1.1.3.Final</org.jboss.arquillian.version>
 	</properties>
-	
+
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		
+
 		<plugins>
-		
+
 			<!-- generate deployment package and client jar -->
- 			<plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
@@ -36,17 +34,17 @@
 					<generateClient>true</generateClient>
 				</configuration>
 			</plugin>
- 
+
 			<!-- JBoss AS plugin to deploy the application -->
-  			<plugin>
+			<plugin>
 				<groupId>org.jboss.as.plugins</groupId>
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>${jboss-as-maven-plugin.version}</version>
-  				<configuration>
+				<configuration>
 					<filename>${project.build.finalName}.jar</filename>
 				</configuration>
- 			</plugin> 
- 			
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -63,28 +61,35 @@
 				<groupId>org.jboss.spec</groupId>
 				<artifactId>jboss-javaee-6.0</artifactId>
 				<version>3.0.2.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
 
-        <!-- Import the Common Annotations API (JSR-250), we use provided scope
-            as the API is included in JBoss EAP 6 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>16.0</version>
+		</dependency>
 
-        <!-- Import the EJB 3.1 API, we use provided scope as the API is included in JBoss EAP 6 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<!-- Import the Common Annotations API (JSR-250), we use provided scope 
+			as the API is included in JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the EJB 3.1 API, we use provided scope as the API is included 
+			in JBoss EAP 6 -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Import the JPA API, we use provided scope as the API is included in 
 			JBoss AS 7 -->
@@ -104,6 +109,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+		</dependency>
+
+		<!-- test libraries -->
+
 		<!-- unit tests -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -111,12 +123,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
- 
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-		</dependency>
-             
+
 	</dependencies>
 
 </project>

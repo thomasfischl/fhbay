@@ -23,7 +23,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 @Entity
-// @Access(AccessType.PROPERTY)
 public class Customer implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -40,13 +39,6 @@ public class Customer implements Serializable {
   private String password;
   private String email;
 
-  // variant 1:
-  // @Embedded
-  // @AttributeOverrides({
-  // @AttributeOverride(name="zipCode", column=@Column(name="BILLING_ZIP_CODE", nullable=false)),
-  // @AttributeOverride(name="city", column=@Column(name="BILLING_CITY")),
-  // @AttributeOverride(name="street", column=@Column(name="BILLING_STREET"))})
-  // variant 2:
   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private Address billingAddress;
 
@@ -55,12 +47,6 @@ public class Customer implements Serializable {
   @OrderColumn
   private List<Address> shippingAddresses = new ArrayList<>();
 
-  // variant 1
-  // @ElementCollection(fetch=FetchType.EAGER)
-  // @CollectionTable(name="PHONES")
-  // private List<Phone> phones = new ArrayList<>();
-
-  // variant 2
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "PHONES")
   @MapKeyColumn
@@ -147,18 +133,6 @@ public class Customer implements Serializable {
   public void addShippingAddress(Address shippingAddress) {
     this.shippingAddresses.add(shippingAddress);
   }
-
-  // public List<Phone> getPhones() {
-  // return phones;
-  // }
-  //
-  // public void setPhones(List<Phone> phones) {
-  // this.phones = phones;
-  // }
-  //
-  // public void addPhone(Phone phone) {
-  // this.phones.add(phone);
-  // }
 
   public Map<String, Phone> getPhones() {
     return phones;
