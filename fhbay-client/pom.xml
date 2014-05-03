@@ -73,14 +73,14 @@
 		</dependency>
 
 		<!-- runtime dependencies: We just need these jars in our runtime classpath -->
- 		
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
- 		<dependency>
+
+		<dependency>
 			<groupId>org.jboss.spec.javax.transaction</groupId>
 			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
 			<scope>runtime</scope>
@@ -132,6 +132,14 @@
 			<groupId>org.jboss.as</groupId>
 			<artifactId>jboss-as-jms-client-bom</artifactId>
 			<type>pom</type>
+		</dependency>
+
+		<!-- unit tests -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

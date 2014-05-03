@@ -72,27 +72,6 @@ public class FhBayConsoleClient {
     }
   }
 
-  // @SuppressWarnings("unused")
-  // private static void testSimple() {
-  // final String jndiNameCustomerAdmin =
-  // "ejb:/fhbay/fhbay-beans/SimpleCustomerAdminBean!sve2.fhbay.interfaces.SimpleCustomerAdminRemote";
-  //
-  // try {
-  // Context ctx = new InitialContext();
-  // SimpleCustomerAdminRemote custAdminProxy = (SimpleCustomerAdminRemote)
-  // ctx
-  // .lookup(jndiNameCustomerAdmin);
-  //
-  // Customer cust1 = new Customer("Franz", "Klammer", "fklammer",
-  // "franzi", "klammer@gmail.com");
-  //
-  // System.out.println("------------ saveCustomer ------------");
-  // custAdminProxy.saveCustomer(cust1);
-  // } catch (NamingException e) {
-  // e.printStackTrace();
-  // }
-  // }
-
   private static void testCustomerAdmin() {
     try {
       System.out.println("--------------- save customer ---------------");
