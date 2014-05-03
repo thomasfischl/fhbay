@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sve2.fhbay.client</groupId>
+	<artifactId>fhbay-beans-client</artifactId>
+	<version>1.0.0</version>
+
+	<!-- run client: mvn -q exec:java -->
+
+	<properties>
+		<org.jboss.jbossas.version>7.2.0.Final</org.jboss.jbossas.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<!-- Add the maven exec plugin to allow us to run a java program via maven -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>sve2.fhbay.client.FhBayConsoleClient</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-6.0</artifactId>
+				<version>3.0.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-ejb-client-bom</artifactId>
+				<version>${org.jboss.jbossas.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+
+		<!-- fhbay-beans client library -->
+		<dependency>
+			<groupId>sve2.ejb</groupId>
+			<artifactId>fhbay-beans</artifactId>
+			<version>1.0.0</version>
+			<type>ejb-client</type>
+		</dependency>
+
+		<!-- runtime dependencies: We just need these jars in our runtime classpath -->
+ 		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+ 		<dependency>
+			<groupId>org.jboss.spec.javax.transaction</groupId>
+			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Import the EJB 3.1 API, we use runtime scope because we aren't using 
+			any direct reference to EJB spec API in our client code -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- JBoss EJB client API jar -->
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-ejb-client</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- client communications with the server use XNIO -->
+		<dependency>
+			<groupId>org.jboss.xnio</groupId>
+			<artifactId>xnio-api</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.xnio</groupId>
+			<artifactId>xnio-nio</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Remote EJB accesses can be secured -->
+		<dependency>
+			<groupId>org.jboss.sasl</groupId>
+			<artifactId>jboss-sasl</artifactId>
+		</dependency>
+
+		<!-- data serialization for invoking remote EJBs -->
+		<dependency>
+			<groupId>org.jboss.marshalling</groupId>
+			<artifactId>jboss-marshalling-river</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- JMS dependencies -->
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-jms-client-bom</artifactId>
+			<type>pom</type>
+		</dependency>
+
+	</dependencies>
+
+</project>
