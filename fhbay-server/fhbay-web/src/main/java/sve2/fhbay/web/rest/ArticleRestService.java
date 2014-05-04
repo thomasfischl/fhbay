@@ -59,17 +59,16 @@ public class ArticleRestService {
   @PUT
   @Path("offer")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void offer(ArticleDTO article) throws Exception {
+  public String offer(ArticleDTO article) throws Exception {
     try {
       Article domain = Converter.mapToDomain(article);
       domain.setId(null);
       domain.setArticleState(ArticleState.OFFERED);
-      articleAdmin.offerArticle(domain, article.getSellerId());
+      Long id = articleAdmin.offerArticle(domain, article.getSellerId());
+      return String.valueOf(id);
     } catch (IdNotFoundException e) {
       throw new WebApplicationException(Status.NOT_FOUND);
     }
   }
-  
-  
-  
+
 }

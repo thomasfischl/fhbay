@@ -30,8 +30,6 @@ public class Converter {
 
   public static Article mapToDomain(ArticleDTO article) {
     Article dom = new Article();
-
-    dom.setArticleState(ArticleState.valueOf(article.getArticleState()));
     dom.setDescription(article.getDescription());
     try {
       dom.setEndDate(sdf.parse(article.getEndDate()));
