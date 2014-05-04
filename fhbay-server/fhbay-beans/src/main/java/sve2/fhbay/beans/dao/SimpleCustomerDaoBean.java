@@ -15,28 +15,11 @@ import sve2.fhbay.interfaces.dao.SimpleCustomerDao;
 import sve2.util.JdbcUtil;
 
 @Stateless
-// (1a) (2b)
-// @Resource(name="jdbc/FhBayDS", mappedName="java:jboss/datasources/FhBayDS", type=DataSource.class)
 public class SimpleCustomerDaoBean implements SimpleCustomerDao {
 
-  // (2a)
-  // @Resource(mappedName="java:jboss/datasources/FhBayDS")
-  // (2b)
-  // @Resource(name="jdbc/FhBayDS")
-  // (2c) no annotations
   private DataSource dataSource;
 
   public DataSource getDataSource() {
-    // (1x)
-    // try {
-    // Context ctx = new InitialContext();
-    // return (DataSource)ctx.lookup("java:comp/env/jdbc/FhBayDS");
-    // }
-    // catch (NamingException e) {
-    // throw new EJBException(e);
-    // }
-
-    // (2x)
     return dataSource;
   }
 
