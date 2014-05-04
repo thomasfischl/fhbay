@@ -21,7 +21,7 @@ public class Bid {
   @GeneratedValue
   private Long id;
 
-  private Long amount;
+  private Double amount;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private Customer bidder;
@@ -35,7 +35,7 @@ public class Bid {
   public Bid() {
   }
 
-  public Bid(Long amount, Customer bidder, Article article, Date createdDate) {
+  public Bid(Double amount, Customer bidder, Article article, Date createdDate) {
     super();
     this.amount = amount;
     this.bidder = bidder;
@@ -51,11 +51,11 @@ public class Bid {
     this.id = id;
   }
 
-  public Long getAmount() {
+  public Double getAmount() {
     return amount;
   }
 
-  public void setAmount(Long amount) {
+  public void setAmount(Double amount) {
     this.amount = amount;
   }
 
