@@ -22,12 +22,26 @@ public class Category implements Serializable {
   @GeneratedValue
   private Long id;
 
+  private String name;
+
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   @JoinColumn
   private Set<Category> subcategories = new HashSet<>();
 
   @OneToOne(fetch = FetchType.LAZY, orphanRemoval = false)
   private Category parent;
+
+  public Category() {
+  }
+
+  public Category(String name, Category parent) {
+    this.name = name;
+    this.parent = parent;
+  }
+
+  public Category(String name) {
+    this.name = name;
+  }
 
   public Long getId() {
     return id;
@@ -43,5 +57,21 @@ public class Category implements Serializable {
 
   public void setSubcategories(Set<Category> subcategories) {
     this.subcategories = subcategories;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Category getParent() {
+    return parent;
+  }
+
+  public void setParent(Category parent) {
+    this.parent = parent;
   }
 }

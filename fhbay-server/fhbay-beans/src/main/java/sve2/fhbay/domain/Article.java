@@ -13,15 +13,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@NamedQuery(name = "queryFindByPatternAndCategory", query = "select distinct a from Article a where lower(a.name) like :pattern or lower(a.description) like :pattern")
+@NamedQueries({
+    @NamedQuery(name = "queryFindByPattern", query = "select distinct a from Article a where lower(a.name) like :pattern or lower(a.description) like :pattern"),
+    @NamedQuery(name = "queryFindByPatternAndCategory", query = "select distinct a from Article a where (lower(a.name) like :pattern or lower(a.description) like :pattern) and :category member of a.categories") })
 public class Article implements Serializable {
 
   private static final long serialVersionUID = -1L;
@@ -54,8 +56,7 @@ public class Article implements Serializable {
   @Enumerated(EnumType.STRING)
   private ArticleState articleState = ArticleState.OFFERED;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  @JoinColumn
+  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   private Set<Category> categories = new HashSet<>();
 
   public Article() {
@@ -67,6 +68,11 @@ public class Article implements Serializable {
     this.initialPrice = initialPrice;
     this.startDate = startDate;
     this.endDate = endDate;
+  }
+
+  public Article(String name, String description, double initialPrice, Date startDate, Date endDate, Category category) {
+    this(name, description, initialPrice, startDate, endDate);
+    categories.add(category);
   }
 
   public Long getId() {
