@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -58,6 +59,11 @@ public class Article implements Serializable {
 
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   private Set<Category> categories = new HashSet<>();
+
+  @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
+  private Set<Bid> bids;
+
+  private Long successfulBidId;
 
   public Article() {
   }
@@ -161,6 +167,34 @@ public class Article implements Serializable {
 
   public void setCategories(Set<Category> categories) {
     this.categories = categories;
+  }
+
+  public Set<Bid> getBids() {
+    return bids;
+  }
+
+  public void setBids(Set<Bid> bids) {
+    this.bids = bids;
+  }
+
+  public void addBid(Bid bid) {
+    if (bid == null)
+      throw new IllegalArgumentException("Null bid!");
+    bids.add(bid);
+    bid.setArticle(this);
+  }
+
+  public void setSuccessfulBid(Bid successfulBid) {
+    this.successfulBidId = successfulBid.getId();
+  }
+
+  public Bid getSuccessfulBid() {
+    for (Bid bid : bids) {
+      if (bid.getId() == this.successfulBidId) {
+        return bid;
+      }
+    }
+    return null;
   }
 
   @Override

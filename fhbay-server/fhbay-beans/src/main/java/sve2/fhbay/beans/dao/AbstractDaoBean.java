@@ -56,5 +56,10 @@ public class AbstractDaoBean<T, ID extends Serializable> implements Dao<T, ID> {
   public void remove(T entity) {
     em.remove(entity);
   }
+  
+  @Override
+  public void flush() {
+    em.flush();
+  }
 
 }

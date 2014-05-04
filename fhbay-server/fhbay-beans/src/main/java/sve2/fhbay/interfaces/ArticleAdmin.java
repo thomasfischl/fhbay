@@ -3,6 +3,7 @@ package sve2.fhbay.interfaces;
 import java.util.List;
 
 import sve2.fhbay.domain.Article;
+import sve2.fhbay.domain.Category;
 import sve2.fhbay.exceptions.IdNotFoundException;
 
 public interface ArticleAdmin {
@@ -13,15 +14,14 @@ public interface ArticleAdmin {
 
   Long offerArticle(Article article, Long sellerId) throws IdNotFoundException;
 
-  // Category findCategoryById(Long id) throws IdNotFoundException;
-  //
-  // List<Category> findAllRootCategories();
-  //
-  // Category findCategoryTree(Long categoryId) throws IdNotFoundException;
-  //
-  // Long saveCategory(Category category);
+  Category findCategoryById(Long id) throws IdNotFoundException;
 
-  // void assignArticleToCategory(Long articleId, Long categoryId)
-  // throws IdNotFoundException;
+  List<Category> findAllRootCategories();
+
+  Category findCategoryTree(Long categoryId) throws IdNotFoundException;
+
+  Long saveCategory(Category category);
+
+  void assignArticleToCategory(Long articleId, Long categoryId) throws IdNotFoundException;
 
 }

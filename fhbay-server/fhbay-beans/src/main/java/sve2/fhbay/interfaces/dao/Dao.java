@@ -14,5 +14,7 @@ public interface Dao<T, ID extends Serializable> {
   T findById(ID id);
 
   List<T> findAll();
+  
+  void flush();
 
 }

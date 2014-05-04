@@ -9,9 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.google.common.base.Preconditions;
 
 @Entity
 public class Category implements Serializable {
@@ -24,11 +25,10 @@ public class Category implements Serializable {
 
   private String name;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  @JoinColumn
+  @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false)
   private Set<Category> subcategories = new HashSet<>();
 
-  @OneToOne(fetch = FetchType.LAZY, orphanRemoval = false)
+  @OneToOne(fetch = FetchType.LAZY, orphanRemoval = false, cascade = CascadeType.ALL)
   private Category parent;
 
   public Category() {
@@ -36,7 +36,7 @@ public class Category implements Serializable {
 
   public Category(String name, Category parent) {
     this.name = name;
-    this.parent = parent;
+    parent.addSubCategory(this);
   }
 
   public Category(String name) {
@@ -74,4 +74,20 @@ public class Category implements Serializable {
   public void setParent(Category parent) {
     this.parent = parent;
   }
+
+  public void addSubCategory(Category subcategory) {
+    Preconditions.checkNotNull(subcategory, "subcategory can't be null");
+    if (subcategory.getParent() != null) {
+      subcategory.getParent().getSubcategories().remove(subcategory);
+    }
+    subcategory.setParent(this);
+    subcategories.add(subcategory);
+  }
+
+  public void removeSubCategory(Category subcategory) {
+    Preconditions.checkNotNull(subcategory, "subcategory can't be null");
+    subcategory.setParent(null);
+    subcategories.remove(subcategory);
+  }
+
 }
